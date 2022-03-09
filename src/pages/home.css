@@ -1,3 +1,27 @@
 .home{
     flex: 4;
+    margin: 50px 0px 0px 30px;
+}
+.artis{
+    margin-bottom: 20px;
+}
+.blinkf{
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    50%{
+        opacity: 0;
+    }
+}
+.anch{
+    font-weight: 600;
+}
+.parent{
+    margin-top: 20px;
+    width: 50%;
+}
+.child{
+    float: left;
+    width: 48px;
 }

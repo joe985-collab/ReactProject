@@ -40,6 +40,7 @@ app.route("/articles")
         }
     })
 })
-app.listen(process.env.PORT||8080,function(){
-    console.log("Server started succesfully.")
+let PORT = process.env.PORT||8080
+app.listen(PORT,function(){
+    console.log("Server started succesfully at "+PORT+".")
 })

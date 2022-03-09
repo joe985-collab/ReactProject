@@ -8,7 +8,9 @@ export default function Chart({title,data,dataKey,grid}) {
         <ResponsiveContainer width="100%" aspect={4/1}>
             <LineChart data={data}>
                 <XAxis dataKey="Country" stroke="#5550bd"/>
-                <Line type="monotone" dataKey={dataKey} stroke="#5550bd"/>
+                <Line type="monotone" dataKey={dataKey[0]} stroke="#5550bd"/>
+                <Line type="monotone" dataKey={dataKey[1]} stroke="#019267"/>
+                <Line type="monotone" dataKey={dataKey[2]} stroke="#9ADCFF"/>
                 <Tooltip/>
                 {grid && <CartesianGrid stroke="#e0dfdf" strokeDasharray="5 5"/>}
             </LineChart>

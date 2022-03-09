@@ -1,11 +1,14 @@
-import { ClassNames } from "@emotion/react"
+import React from 'react'
 import {useEffect, useState} from "react"
-import Chart from "../components/chart/Chart"
-import Featuredinfo from "../components/featuredinfo/Featuredinfo"
-import "./home.css"
-import { userData } from "../dummyData"
-export default function Home(){
-    const[dataz,  setData] = useState(null);
+import { useParams } from 'react-router-dom';
+import { KeyboardDoubleArrowRight, KeyboardDoubleArrowLeft } from '@mui/icons-material';
+import "./home.css";
+export default function Home() {
+    let {id} = useParams();
+    console.log(id)
+    const[datal,  setData] = useState(null);
+    let testArticles = new Array(5);
+    let pageArray = [];
     useEffect(()=>{
         fetch("http://localhost:8080/articles")
         .then((response)=>{
@@ -22,20 +25,52 @@ export default function Home(){
             setData(null);
         })
     },[])
-    let testData = [];
-    if(dataz) dataz.every((s,idx)=>{
-        if(idx>9){
-            return false;
-        }else{
-            testData.push({"Country":s.country?s.country:"N/A","Intensity":s.intensity?s.intensity:"N/A"});
-            return true;
-        } 
-        testData = testData.length>0?testData:0;
-    });
-    return(
-        <div className="home">
-            <Featuredinfo/>
-            <Chart data={testData} title="Energy Intensity" grid dataKey="Intensity"/>
-        </div>
-    )
+    if(!id) id = 1;
+    let idx = id>1?(id-1)*5:0;
+    let extra = id>1?(id-1)*5:0;
+    let len = testArticles.length+extra;
+    let testIdx = 0;
+    const [base,setBase] = useState(Math.ceil(id/10)*10);
+    const [pIdx,setIdx] = useState(base-10);
+    useEffect(()=>{
+      console.log(base,pIdx)
+    })
+    let m = 0;
+    for(let i=pIdx;i<base;i++){
+      pageArray[m] = {"num":i+1};
+      m++;
+    }
+    // console.log(len)
+      for(idx;idx<len;idx++){
+        if(datal) testArticles[testIdx] = datal[idx];
+        testIdx++;
+    }
+  return (
+    <div className="home">
+        {testArticles.map(({ id, title,url }) => (
+             <div key={id} className="artis"> 
+                <h2 >
+                    {title}
+                </h2>
+                <a href={url}>{url}</a>
+             </div>
+    
+          ))}
+          <a className="anch" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">IMPORTANT! CLICK HERE!</a>
+          <div className="blinkf">☝</div>
+          <div className="parent">
+              {base>10&&<div className="child"><button onClick={() =>{ 
+                setBase(base - 10)
+                setIdx(pIdx-10);
+                }}><KeyboardDoubleArrowLeft/></button></div>}
+              {pageArray.map(({num})=>(
+                  <div key={num} className="child"><a href={"/"+num}>{num}</a></div>
+              ))}
+              {base<190&&<div className="child"><button onClick={() =>{ 
+                setBase(base + 10)
+                setIdx(pIdx+10);
+                }}><KeyboardDoubleArrowRight/></button></div>}
+          </div>
+    </div>
+  )
 }
