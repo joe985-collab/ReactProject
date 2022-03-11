@@ -5,7 +5,6 @@ import { KeyboardDoubleArrowRight, KeyboardDoubleArrowLeft } from '@mui/icons-ma
 import "./home.css";
 export default function Home() {
     let {id} = useParams();
-    console.log(id)
     const[datal,  setData] = useState(null);
     let testArticles = new Array(5);
     let pageArray = [];
@@ -33,7 +32,6 @@ export default function Home() {
     const [base,setBase] = useState(Math.ceil(id/10)*10);
     const [pIdx,setIdx] = useState(base-10);
     useEffect(()=>{
-      console.log(base,pIdx)
     })
     let m = 0;
     for(let i=pIdx;i<base;i++){
@@ -66,7 +64,7 @@ export default function Home() {
               {pageArray.map(({num})=>(
                   <div key={num} className="child"><a href={"/"+num}>{num}</a></div>
               ))}
-              {base<190&&<div className="child"><button onClick={() =>{ 
+              {base<200&&<div className="child"><button onClick={() =>{ 
                 setBase(base + 10)
                 setIdx(pIdx+10);
                 }}><KeyboardDoubleArrowRight/></button></div>}

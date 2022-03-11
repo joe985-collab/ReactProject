@@ -1,28 +1,29 @@
-import {useEffect, useState} from "react"
+import {useState} from "react"
 import Chart from "../components/chart/Chart"
-import Featuredinfo from "../components/featuredinfo/Featuredinfo"
 import {useLocation} from "react-router-dom";
-import Home from "./Home";
 import "./SLChart.css"
-import { formControlUnstyledClasses } from "@mui/core"
+import Filter from "../components/filters/Filter";
 export default function SLChart(){
     const locs = useLocation();
     const dataz = locs.state;
+    const[formData,setData] = useState(0);
+    const childToParent = (childData)=>{
+         setData(childData);
+    }
+    // let testForm = document.querySelector("form").addEventListener("submit",(e)=>{
+    //     console.log(e.target);
+    // })
     let testData = [];
-    let dkeys = ["Intensity","Likelihood","Relevance"];
-    if(dataz) dataz.every((s,idx)=>{
-        let store = (argStr)=>(s[argStr]?s[argStr]:"N/A");
-        if(idx>9){
-            return false;
-        }else{
-            testData.push({"Country":store("country"),"Intensity":store("intensity"),"Likelihood":store("likelihood"),"Relevance":store("relevance")});
-            return true;
-        } 
-    });
+    let dkeys = ["intensity","likelihood","relevance"];
+    let strtIdx = (formData-1)*10;
+    let endIdx = strtIdx+10;
+    testData = formData>1&&formData<101?dataz.slice(strtIdx,endIdx):dataz.slice(0,10);
+    // console.log(testData)
     return(
         <div className="slchart">
-            <Featuredinfo/>
-            <Chart data={testData} title="Energy Statistics" grid dataKey={dkeys}/>
+            <label className="mylabel">Enter a Page between 1-100</label>
+            <Filter childToParent={childToParent} />
+           {testData.length && <Chart data={testData} title="Energy Statistics" grid dataKey={dkeys}/>}
         </div>
     )
 }
