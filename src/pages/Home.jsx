@@ -8,6 +8,9 @@ export default function Home() {
     const[datal,  setData] = useState(null);
     let testArticles = new Array(5);
     let pageArray = [];
+    const sleep = (milliseconds) => {
+      return new Promise(resolve => setTimeout(resolve, milliseconds))
+          }
     useEffect(()=>{
         fetch("http://localhost:8080/articles")
         .then((response)=>{
@@ -33,10 +36,14 @@ export default function Home() {
     const [pIdx,setIdx] = useState(base-10);
     useEffect(()=>{
     })
-    let m = 0;
-    for(let i=pIdx;i<base;i++){
-      pageArray[m] = {"num":i+1};
-      m++;
+    // let m = 0;
+    // for(let i=pIdx;i<base;i++){
+    //   pageArray[m] = i+1;
+    //   m++;
+    // }
+    // let m = 0;
+    for(let i=0;i<200;i++){
+      pageArray[i] = i+1;
     }
     // console.log(len)
       for(idx;idx<len;idx++){
@@ -57,17 +64,19 @@ export default function Home() {
           <a className="anch" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">IMPORTANT! CLICK HERE!</a>
           <div className="blinkf">☝</div>
           <div className="parent">
-              {base>10&&<div className="child"><button onClick={() =>{ 
+              {/* {base>10&&<div className="child"><button onClick={() =>{ 
                 setBase(base - 10)
                 setIdx(pIdx-10);
-                }}><KeyboardDoubleArrowLeft/></button></div>}
-              {pageArray.map(({num})=>(
-                  <div key={num} className="child"><a href={"/"+num}>{num}</a></div>
-              ))}
-              {base<200&&<div className="child"><button onClick={() =>{ 
-                setBase(base + 10)
-                setIdx(pIdx+10);
-                }}><KeyboardDoubleArrowRight/></button></div>}
+                }}><KeyboardDoubleArrowLeft/></button></div>} */}
+               {/* <marquee behaviour="scroll" width="85%" direction="right" scrollamount="20"> */}
+                    {pageArray.map((num)=>(
+                        <div key={num} className="child"><a href={"/"+num}>{num}</a></div>
+                    ))}
+               {/* </marquee> */}
+               {/* {base<200&&<div className="child"><button onClick={() =>{ 
+                    setBase(base + 10)
+                    setIdx(pIdx+10);
+                    }}><KeyboardDoubleArrowRight/></button></div>} */}
           </div>
     </div>
   )

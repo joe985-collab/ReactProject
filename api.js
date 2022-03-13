@@ -28,7 +28,7 @@ const visualSchema = {
     title: String,
     likelihood: Number
 };
-
+// Please change the below code to connect to your database
 const Visual = mongoose.model("Visual",visualSchema);
 app.route("/articles")
 .get(function(req,res){

@@ -23,6 +23,10 @@ export default function PChart() {
   const childToParent = (childData)=>{
        setData(childData);
   }
+  const [optionData,setDat] = useState("intensity");
+  let fish = (e)=>{
+      setDat(e.target.value)
+  }
   let strtIdx = (formData-1)*10;
   let endIdx = strtIdx+10;
   datah = formData>1&&formData<101?initData.slice(strtIdx,endIdx):initData.slice(0,10);
@@ -38,7 +42,6 @@ export default function PChart() {
      test[rgn] = 1;
     }
   })
-  console.log(test)
   const width = 2*outerRadius+100;
   const height = 2*outerRadius+100;
   const colorScale = d3
@@ -68,7 +71,7 @@ export default function PChart() {
       const pieGenerator = d3
       .pie()
       .padAngle(0)
-      .value((d)=>d.intensity)
+      .value((d)=>d[optionData])
 
       const arc = svg
       .selectAll()
@@ -95,10 +98,16 @@ export default function PChart() {
   }
   return (
     <div className="pchart">
-        <div>
+       <div className="selectB">
             <label className="mylabel1">Enter a Page between 1-100</label>
-           <Filter childToParent={childToParent}/>
+              <label className='filtz'>Filter</label>
+              <select onChange={fish} className='slct' name="cars" id="selectz">
+                  <option value="intensity">Intensity</option>
+                  <option value="relevance">Relevance</option>
+                  <option value="likelihood">Likelihood</option>
+              </select>
         </div>
+        <Filter childToParent={childToParent}/>
         <div id="pie-container"/>
     </div>
   )

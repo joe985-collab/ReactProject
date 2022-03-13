@@ -19,9 +19,14 @@
 }
 .parent{
     margin-top: 20px;
-    width: 50%;
+    /* width: 50%; */
+    width: 450px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
 }
 .child{
-    float: left;
+    /* float: left; */
+    display: inline-block;
     width: 45px;
 }

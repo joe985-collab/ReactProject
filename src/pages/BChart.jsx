@@ -25,18 +25,6 @@ export default function BChart() {
 //    }
 //  })
    DUMMY_DATA = formData>1&&formData<251?barData.slice(strtIdx,endIdx):barData.slice(0,4);
-   let test = {}
-   let count = 1;
-   DUMMY_DATA.forEach((d,idx)=>{
-     let rgn = DUMMY_DATA[idx].region
-     if(test[rgn]){
-      // console.log(DUMMY_DATA[idx],"Here")
-      DUMMY_DATA[idx].region = rgn+`${count}`;
-      count++;
-     }else{
-      test[rgn] = 1;
-     }
-   })
   //  console.log(DUMMY_DATA)
 //  console.log(DUMMY_DATA)
   // const svgElement = d3.select(ref.current);
@@ -58,6 +46,18 @@ export default function BChart() {
     nums = chosenValue==="intensity"||chosenValue==="relevance"||chosenValue==="likelihood"?chosenValue:"intensity";
     strng = chosenValue==="source"||chosenValue==="topic"||chosenValue==="country"||chosenValue==="sector"?chosenValue:"region";
   }
+  let test = {}
+  let count = 1;
+  DUMMY_DATA.forEach((d,idx)=>{
+    let rgn = DUMMY_DATA[idx][strng]
+    if(test[rgn]){
+     // console.log(DUMMY_DATA[idx],"Here")
+     DUMMY_DATA[idx][strng] = rgn+`${count}`;
+     count++;
+    }else{
+     test[rgn] = 1;
+    }
+  })
   let titles = chosenValue?chosenValue[0].toUpperCase()+chosenValue.slice(1):"Intensity";
   useEffect(()=>{
       // const MARGINS = {top:20,bottom:10};
